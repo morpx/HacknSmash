@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour {
     public LayerMask whatIsGround;
     float groundRadius = 0.2f;
 
+    bool attacking = false;
+
     double deathtimer = 0.0;
 
     private float currentHeight;
@@ -25,15 +27,28 @@ public class PlayerController : MonoBehaviour {
     {
         anim = GetComponent<Animator>();
     }
-    
+
+    public float timer;
+    public float time = 10;
+
     void Update()
     {
         if (grounded && Input.GetKeyDown(KeyCode.Space))
         {
-            anim.SetBool("Ground", false);
-            rigidbody2D.AddForce(new Vector2(0, jumpForce));
+            StartCoroutine(PlayOnce("Attacking"));
+            //anim.SetBool("Ground", false);
+            //rigidbody2D.AddForce(new Vector2(0, jumpForce));
             
         }
+
+        
+    }
+
+    private IEnumerator PlayOnce(string paramName)
+    {
+        anim.SetBool(paramName, true);
+        yield return null;
+        anim.SetBool(paramName, false);
     }
 
     void FixedUpdate()
