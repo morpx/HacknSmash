@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour {
 
     private float currentHeight;
 
-
     Animator anim;
 
     void Start() 
@@ -33,19 +32,28 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
+        var currentBaseState = anim.GetCurrentAnimatorStateInfo(0).nameHash;
+        Debug.LogError(currentBaseState);
+
         if (grounded && Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(PlayOnce("Attacking"));
-            //anim.SetBool("Ground", false);
-            //rigidbody2D.AddForce(new Vector2(0, jumpForce));
+            anim.SetBool("Ground", false);
+            rigidbody2D.AddForce(new Vector2(0, jumpForce));
             
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            StartCoroutine(PlayOnce("Attacking"));
         }
 
         
     }
 
+
     private IEnumerator PlayOnce(string paramName)
     {
+        
         anim.SetBool(paramName, true);
         yield return null;
         anim.SetBool(paramName, false);
@@ -53,6 +61,8 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
+        
+
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
         anim.SetBool("Ground", grounded);
         anim.SetFloat("vSpeed", rigidbody2D.velocity.y);
