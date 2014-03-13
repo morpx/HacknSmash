@@ -22,18 +22,31 @@ public class PlayerController : MonoBehaviour {
 
     Animator anim;
 
+    public int attackStateId;
+
+    void Awake()
+    {
+        attackStateId = Animator.StringToHash("Base Layer.Attack");
+    }
+
     void Start() 
     {
         anim = GetComponent<Animator>();
+        
     }
 
-    public float timer;
-    public float time = 10;
+    void resetAttack()
+    {
+        attacking = false;
+    }
+
 
     void Update()
     {
-        var currentBaseState = anim.GetCurrentAnimatorStateInfo(0).nameHash;
-        Debug.LogError(currentBaseState);
+        Debug.LogError(attacking);
+
+        if (anim.IsInTransition(0) && anim.GetNextAnimatorStateInfo(0).nameHash == attackStateId)
+            anim.SetBool("Attacking", false);
 
         if (grounded && Input.GetKeyDown(KeyCode.Space))
         {
@@ -42,9 +55,10 @@ public class PlayerController : MonoBehaviour {
             
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && attacking == false)
         {
-            StartCoroutine(PlayOnce("Attacking"));
+            anim.SetBool("Attacking", true);
+            attacking = true;
         }
 
         
