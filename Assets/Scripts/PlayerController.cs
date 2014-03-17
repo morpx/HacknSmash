@@ -43,8 +43,6 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
-        Debug.LogError(attacking);
-
         if (anim.IsInTransition(0) && anim.GetNextAnimatorStateInfo(0).nameHash == attackStateId)
             anim.SetBool("Attacking", false);
 
@@ -60,8 +58,6 @@ public class PlayerController : MonoBehaviour {
             anim.SetBool("Attacking", true);
             attacking = true;
         }
-
-        
     }
 
 
