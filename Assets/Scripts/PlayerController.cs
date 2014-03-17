@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour {
 
     bool attacking = false;
 
+	bool blocking = false;
+
     double deathtimer = 0.0;
 
     private float currentHeight;
@@ -46,7 +48,7 @@ public class PlayerController : MonoBehaviour {
         if (anim.IsInTransition(0) && anim.GetNextAnimatorStateInfo(0).nameHash == attackStateId)
             anim.SetBool("Attacking", false);
 
-        if (grounded && Input.GetKeyDown(KeyCode.Space))
+        if (grounded && Input.GetKeyDown(KeyCode.Space) && blocking == false)
         {
             anim.SetBool("Ground", false);
             rigidbody2D.AddForce(new Vector2(0, jumpForce));
@@ -58,6 +60,18 @@ public class PlayerController : MonoBehaviour {
             anim.SetBool("Attacking", true);
             attacking = true;
         }
+
+		if (Input.GetKeyDown(KeyCode.E)) 
+		{
+			blocking = true;
+			anim.SetBool("Blocking", true);
+		}
+
+		if (Input.GetKeyUp(KeyCode.E)) 
+		{
+			blocking = false;
+			anim.SetBool("Blocking", false);
+		}
     }
 
 
@@ -78,24 +92,21 @@ public class PlayerController : MonoBehaviour {
         anim.SetFloat("vSpeed", rigidbody2D.velocity.y);
 
         //så här mkt trycker vi på "left/right"-knapparna
-        float move = Input.GetAxis("Horizontal");
+		if(!blocking){
+	        float move = Input.GetAxis("Horizontal");
 
-        //sätter vår animators speed till absoluta värdet av move
-        anim.SetFloat("Speed", Mathf.Abs(move));
+	        //sätter vår animators speed till absoluta värdet av move
+	        anim.SetFloat("Speed", Mathf.Abs(move));
 
-        //hur mkt vi trycker * maxSpeed, existerande y-hastighet
-        rigidbody2D.velocity = new Vector2(move * maxSpeed, rigidbody2D.velocity.y);
+	        //hur mkt vi trycker * maxSpeed, existerande y-hastighet
+	        rigidbody2D.velocity = new Vector2(move * maxSpeed, rigidbody2D.velocity.y);
 
-        if (move > 0 && !facingRight)
-            Flip();
-        else if (move < 0 && facingRight)
-            Flip();
+	        if (move > 0 && !facingRight)
+	            Flip();
+	        else if (move < 0 && facingRight)
+	            Flip();
 
-        if (rigidbody2D.velocity.y < -20 && grounded)
-        {
-            Debug.LogError("You died LOL");
-            Splat();
-        }
+		}
     }
 
     void Splat()
