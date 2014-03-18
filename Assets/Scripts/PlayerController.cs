@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour {
     float groundRadius = 0.2f;
 
     bool attacking = false;
-
 	bool blocking = false;
+	bool divebombing = false;
 
     double deathtimer = 0.0;
 
@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour {
 
     void Awake()
     {
+		//vårt id för attackanimationen
         attackStateId = Animator.StringToHash("Base Layer.Attack");
     }
 
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour {
         
     }
 
+	//körs i sista framen av vår attackanimation
     void resetAttack()
     {
         attacking = false;
@@ -45,9 +47,11 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
+		//om attackanimationen har startats sätter vi attack-boolean till false, så att vi inte kan göra en ny attack förrän den animerats färdigt
         if (anim.IsInTransition(0) && anim.GetNextAnimatorStateInfo(0).nameHash == attackStateId)
             anim.SetBool("Attacking", false);
 
+		//om vi inte blockar och hoppar
         if (grounded && Input.GetKeyDown(KeyCode.Space) && blocking == false)
         {
             anim.SetBool("Ground", false);
@@ -55,18 +59,21 @@ public class PlayerController : MonoBehaviour {
             
         }
 
+		//om vi trycker på attack och inte redan attackerar
         if (Input.GetKeyDown(KeyCode.Q) && attacking == false)
         {
             anim.SetBool("Attacking", true);
             attacking = true;
         }
 
+		//om vi är på marken och blockar
 		if (Input.GetKeyDown(KeyCode.E) && grounded) 
 		{
 			blocking = true;
 			anim.SetBool("Blocking", true);
 		}
 
+		//om vi slutar blocka
 		if (Input.GetKeyUp(KeyCode.E) && grounded) 
 		{
 			blocking = false;
@@ -76,7 +83,14 @@ public class PlayerController : MonoBehaviour {
 		//om vi blockar i luften
 		if (Input.GetKeyDown(KeyCode.E) && !grounded) 
 		{
+			divebombing = true;
+			anim.SetBool("Divebombing", true);
+		}
 
+		if (grounded) 
+		{
+			divebombing = false;
+			anim.SetBool("Divebombing", false);
 		}
     }
 
