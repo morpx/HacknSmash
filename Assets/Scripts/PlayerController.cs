@@ -61,16 +61,22 @@ public class PlayerController : MonoBehaviour {
             attacking = true;
         }
 
-		if (Input.GetKeyDown(KeyCode.E)) 
+		if (Input.GetKeyDown(KeyCode.E) && grounded) 
 		{
 			blocking = true;
 			anim.SetBool("Blocking", true);
 		}
 
-		if (Input.GetKeyUp(KeyCode.E)) 
+		if (Input.GetKeyUp(KeyCode.E) && grounded) 
 		{
 			blocking = false;
 			anim.SetBool("Blocking", false);
+		}
+
+		//om vi blockar i luften
+		if (Input.GetKeyDown(KeyCode.E) && !grounded) 
+		{
+
 		}
     }
 
@@ -92,21 +98,27 @@ public class PlayerController : MonoBehaviour {
         anim.SetFloat("vSpeed", rigidbody2D.velocity.y);
 
         //så här mkt trycker vi på "left/right"-knapparna
-		if(!blocking){
-	        float move = Input.GetAxis("Horizontal");
 
-	        //sätter vår animators speed till absoluta värdet av move
-	        anim.SetFloat("Speed", Mathf.Abs(move));
+        float move = Input.GetAxis("Horizontal");
 
-	        //hur mkt vi trycker * maxSpeed, existerande y-hastighet
-	        rigidbody2D.velocity = new Vector2(move * maxSpeed, rigidbody2D.velocity.y);
 
-	        if (move > 0 && !facingRight)
-	            Flip();
-	        else if (move < 0 && facingRight)
-	            Flip();
 
-		}
+        //sätter vår animators speed till absoluta värdet av move
+		
+        anim.SetFloat("Speed", Mathf.Abs(move));
+
+		if(blocking)
+			rigidbody2D.velocity = new Vector2(move * maxSpeed/3, rigidbody2D.velocity.y);
+        //hur mkt vi trycker * maxSpeed, existerande y-hastighet
+		else
+        	rigidbody2D.velocity = new Vector2(move * maxSpeed, rigidbody2D.velocity.y);
+
+        if (move > 0 && !facingRight)
+            Flip();
+        else if (move < 0 && facingRight)
+            Flip();
+
+		
     }
 
     void Splat()
