@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour {
     void Start() 
     {
         anim = GetComponent<Animator>();
+
+
         
     }
 
