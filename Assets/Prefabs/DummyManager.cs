@@ -7,6 +7,7 @@ public class DummyManager : MonoBehaviour {
 
 	void Start()
 	{
-		Transform o = (Transform)Instantiate(prefab);
+		//Transform o = (Transform)Instantiate(prefab);
+		//Transform p = (Transform)Instantiate(prefab);
 	}
 }
