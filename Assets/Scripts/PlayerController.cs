@@ -3,13 +3,17 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-    public float maxSpeed = 10;
-    public float jumpForce = 500;
+    //vapen-bools
+    public bool mace = false;
+    public bool sword = true;
+
+    private float maxSpeed = 10;
+    private float jumpForce = 500;
     
     private bool facingRight = true;
     
     //variabler som har med huruvida man rör marken att göra
-    bool grounded = true;
+    private bool grounded = true;
     public Transform groundCheck;
     public LayerMask whatIsGround;
     float groundRadius = 0.2f;
@@ -23,21 +27,19 @@ public class PlayerController : MonoBehaviour {
     private float currentHeight;
 
     Animator anim;
-
-    public int attackStateId;
+    WeaponController weapon;
+    private int attackStateId;
 
     void Awake()
     {
 		//vårt id för attackanimationen
         attackStateId = Animator.StringToHash("Base Layer.Attack");
+        //Debug.Log(left_hand);
     }
 
     void Start() 
     {
         anim = GetComponent<Animator>();
-
-
-        
     }
 
 	//körs i sista framen av vår attackanimation
@@ -49,6 +51,14 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
+        //kolla vapen-bools, byt vapen
+        if (mace == true)
+        {
+
+        }
+
+
+
 		//om attackanimationen har startats sätter vi attack-boolean till false, så att vi inte kan göra en ny attack förrän den animerats färdigt
         if (anim.IsInTransition(0) && anim.GetNextAnimatorStateInfo(0).nameHash == attackStateId)
             anim.SetBool("Attacking", false);

@@ -1,0 +1,11 @@
+C:\inetpub\wwwroot\Unity\HackNSmash\Temp\bin\Debug\Assembly-CSharp.dll
+C:\inetpub\wwwroot\Unity\HackNSmash\Temp\bin\Debug\Assembly-CSharp.pdb
+C:\inetpub\wwwroot\Unity\HackNSmash\Temp\bin\Debug\UnityEditor.dll
+C:\inetpub\wwwroot\Unity\HackNSmash\Temp\bin\Debug\UnityEngine.dll
+C:\inetpub\wwwroot\Unity\HackNSmash\Temp\bin\Debug\Mono.Cecil.dll
+C:\inetpub\wwwroot\Unity\HackNSmash\Temp\bin\Debug\nunit.framework.dll
+C:\inetpub\wwwroot\Unity\HackNSmash\Temp\bin\Debug\Unity.DataContract.dll
+C:\inetpub\wwwroot\Unity\HackNSmash\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+C:\inetpub\wwwroot\Unity\HackNSmash\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+C:\inetpub\wwwroot\Unity\HackNSmash\obj\Debug\Assembly-CSharp.dll
+C:\inetpub\wwwroot\Unity\HackNSmash\obj\Debug\Assembly-CSharp.pdb
