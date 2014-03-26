@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
     public bool sword = true;
 
     private float maxSpeed = 10;
-    private float jumpForce = 500;
+    private float jumpForce = 750;
     
     private bool facingRight = true;
     
@@ -45,7 +45,9 @@ public class PlayerController : MonoBehaviour {
 	//körs i sista framen av vår attackanimation
     void resetAttack()
     {
+        Debug.Log("running resetAttack");
         attacking = false;
+        anim.SetBool("Attacking", false);
     }
 
 
@@ -56,8 +58,6 @@ public class PlayerController : MonoBehaviour {
         {
 
         }
-
-
 
 		//om attackanimationen har startats sätter vi attack-boolean till false, så att vi inte kan göra en ny attack förrän den animerats färdigt
         if (anim.IsInTransition(0) && anim.GetNextAnimatorStateInfo(0).nameHash == attackStateId)

@@ -9,8 +9,9 @@ public class WeaponController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         weapon = GetComponent<SpriteRenderer>();
-        Sprite stick = GetCompone
-        Debug.Log(weapon.sprite);
+        Sprite stick = Resources.Load<Sprite>("stick");
+        weapon.sprite = stick;
+        //Debug.Log(stick);
         //Debug.Log(sprite);
 	}
 	
