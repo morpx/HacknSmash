@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
     //vapen-bools
-    public bool mace = false;
+    public bool stick = false;
     public bool sword = true;
 
     private float maxSpeed = 10;
@@ -28,13 +28,13 @@ public class PlayerController : MonoBehaviour {
 
     Animator anim;
     WeaponController weapon;
+
     private int attackStateId;
 
     void Awake()
     {
 		//vårt id för attackanimationen
         attackStateId = Animator.StringToHash("Base Layer.Attack");
-        //Debug.Log(left_hand);
     }
 
     void Start() 
@@ -53,11 +53,22 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
-        //kolla vapen-bools, byt vapen
-        if (mace == true)
-        {
+        //sätt upp referenser till vapenhand + vapen-script
+        GameObject leftHand = GameObject.Find("left_hand");
+        WeaponController weapon = leftHand.GetComponent<WeaponController>();
 
+        //kolla vapen-bools, byt vapen
+        if (sword == true)
+        {
+            weapon.changeSprite("rusty sword");
         }
+
+        else if (stick == true)
+        {
+            weapon.changeSprite("stick");
+        }
+
+
 
 		//om attackanimationen har startats sätter vi attack-boolean till false, så att vi inte kan göra en ny attack förrän den animerats färdigt
         if (anim.IsInTransition(0) && anim.GetNextAnimatorStateInfo(0).nameHash == attackStateId)
