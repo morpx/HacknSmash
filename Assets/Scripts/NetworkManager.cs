@@ -92,7 +92,13 @@ public class NetworkManager : Photon.MonoBehaviour {
 	void OnJoinedRoom() {
 		connected = true;
 		Debug.Log(PhotonNetwork.GetPing());
+		Debug.Log(PhotonNetwork.countOfPlayers);
+		Debug.Log(PhotonNetwork.playerList);
+		Debug.Log(PhotonNetwork.playerName);
 
+		
+		
+		
 		
 		SpawnPlayer();
 //		SpawnEnemy();

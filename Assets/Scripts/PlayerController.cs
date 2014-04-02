@@ -173,4 +173,17 @@ public class PlayerController : MonoBehaviour {
         theScale.x *= -1;
         transform.localScale = theScale;
     }
+	void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+		
+		if(stream.isWriting) {
+			stream.SendNext(transform.position);
+			stream.SendNext(transform.rotation);
+		}
+		else {
+			transform.position = (Vector3)stream.ReceiveNext();
+			transform.rotation = (Quaternion)stream.ReceiveNext();
+
+		}
+		Debug.Log ("adsadada");
+	}
 }
