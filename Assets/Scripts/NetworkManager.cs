@@ -19,11 +19,30 @@ public class NetworkManager : Photon.MonoBehaviour {
 	}
 	
 	void OnGUI() {
+
+		if (PhotonNetwork.insideLobby == true) {
+			GUILayout.Label("adsaadas");
+			foreach (RoomInfo room in PhotonNetwork.GetRoomList()) 
+			{
+				if (GUILayout.Button ("Join" + room.name)) 
+				{
+					PhotonNetwork.JoinRoom(room.name);
+					
+				}
+			}
+
+			if (GUILayout.Button ("Create Room")) 
+			{
+				PhotonNetwork.CreateRoom("derp");
+
+			}
+		}
+
 		if(!connecting) {
 			GUILayout.BeginArea( new Rect(Screen.width/2 - 100, 0, 200, Screen.height) );
 			GUILayout.BeginVertical();
 			GUILayout.FlexibleSpace();
-			
+			GUI.color = Color.red;  	
 			GUILayout.Label("Your Name: ");
 			userName = GUILayout.TextField(userName, 24);
 			
@@ -48,22 +67,44 @@ public class NetworkManager : Photon.MonoBehaviour {
 		else if(!connected) {
 			GUILayout.Label (PhotonNetwork.connectionStateDetailed.ToString());
 		}
+
 	}
 
 	void OnJoinedLobby() {
-		PhotonNetwork.JoinRandomRoom();
+		//PhotonNetwork.JoinRandomRoom();
+		//PhotonNetwork.GetRoomList();
+		//PhotonNetwork.GetPing();
+
+
+		//PhotonNetwork.CreateRoom (null);
+	
+
+
+		Debug.Log (PhotonNetwork.GetRoomList ().Length);
 	}
 	
 	void OnPhotonRandomJoinFailed() {
-		PhotonNetwork.CreateRoom(null);
+		//	PhotonNetwork.CreateRoom(null);
+
+
 	}
 	
-//	void OnJoinedRoom() {
-//		connected = true;
-//		SpawnPlayer();
+	void OnJoinedRoom() {
+		connected = true;
+		Debug.Log(PhotonNetwork.GetPing());
+
+		
+		SpawnPlayer();
 //		SpawnEnemy();
-//	}
-	
+
+
+	}
+
+	void SpawnPlayer() {
+
+		GameObject player = PhotonNetwork.Instantiate ("PlayerPrefab", Vector3.zero, Quaternion.identity, 0);
+	}
+
 //	void SpawnPlayer() {
 //		GameObject myShip = PhotonNetwork.Instantiate( "Ship1", Random.onUnitSphere * 2f, Quaternion.identity, 0 );
 //		myShip.GetComponent<Targetable>().enabled=false;	// We can't target ourselves.
