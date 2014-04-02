@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : Photon.MonoBehaviour {
+
+    private PhotonView pv;
 
     //vapen-bools
     public bool stick = false;
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour {
     void Start() 
     {
         anim = GetComponent<Animator>();
+        
     }
 
 	//körs i sista framen av vår attackanimation
@@ -53,6 +56,8 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
+        if(pv.isMine)
+        { 
         //sätt upp referenser till vapenhand + vapen-script
         GameObject leftHand = GameObject.Find("left_hand");
         WeaponController weapon = leftHand.GetComponent<WeaponController>();
@@ -115,6 +120,7 @@ public class PlayerController : MonoBehaviour {
 			divebombing = false;
 			anim.SetBool("Divebombing", false);
 		}
+        }//photonview
     }
 
 
@@ -128,8 +134,8 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        
-
+        if(pv.isMine)
+        { 
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
         anim.SetBool("Ground", grounded);
         anim.SetFloat("vSpeed", rigidbody2D.velocity.y);
@@ -155,7 +161,7 @@ public class PlayerController : MonoBehaviour {
         else if (move < 0 && facingRight)
             Flip();
 
-		
+        }
     }
 
     void Splat()
