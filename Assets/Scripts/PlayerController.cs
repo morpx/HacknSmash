@@ -55,9 +55,7 @@ public class PlayerController : Photon.MonoBehaviour {
 
 
     void Update()
-    {
-        if(pv.isMine)
-        { 
+    { 
         //sätt upp referenser till vapenhand + vapen-script
         GameObject leftHand = GameObject.Find("left_hand");
         WeaponController weapon = leftHand.GetComponent<WeaponController>();
@@ -73,9 +71,7 @@ public class PlayerController : Photon.MonoBehaviour {
             weapon.changeSprite("stick");
         }
 
-
-
-		//om attackanimationen har startats sätter vi attack-boolean till false, så att vi inte kan göra en ny attack förrän den animerats färdigt
+        //om attackanimationen har startats sätter vi attack-boolean till false, så att vi inte kan göra en ny attack förrän den animerats färdigt
         if (anim.IsInTransition(0) && anim.GetNextAnimatorStateInfo(0).nameHash == attackStateId)
             anim.SetBool("Attacking", false);
 
@@ -120,7 +116,7 @@ public class PlayerController : Photon.MonoBehaviour {
 			divebombing = false;
 			anim.SetBool("Divebombing", false);
 		}
-        }//photonview
+        
     }
 
 
@@ -134,8 +130,7 @@ public class PlayerController : Photon.MonoBehaviour {
 
     void FixedUpdate()
     {
-        if(pv.isMine)
-        { 
+        
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
         anim.SetBool("Ground", grounded);
         anim.SetFloat("vSpeed", rigidbody2D.velocity.y);
@@ -161,7 +156,7 @@ public class PlayerController : Photon.MonoBehaviour {
         else if (move < 0 && facingRight)
             Flip();
 
-        }
+        
     }
 
     void Splat()
